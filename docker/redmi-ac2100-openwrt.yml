@@ -1,0 +1,25 @@
+FROM ubuntu:20.04
+
+# 免选择时区，防止apt-get安装中断
+ENV DEBIAN_FRONTEND=noninteractive TZ="Asia/Shanghai"
+
+ADD redmi-ac2100.config /.config
+
+RUN apt-get update -y && \
+    apt-get install -y systemd build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl swig rsync && \
+    apt-get autoremove --purge && \
+    apt-get clean && \
+    # 时区设置
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
+    git clone https://github.com/coolsnowwolf/lede /openwrt && \
+    cd /openwrt/package && \
+    git clone https://github.com/kenzok8/openwrt-packages.git && \
+    git clone https://github.com/kenzok8/small.git && \
+    cd /openwrt && \
+    ./scripts/feeds update -a && \
+    ./scripts/feeds install -a && \
+    cp /.config /openwrt/.config && \
+    # 修改路由IP
+    sed -i 's/192.168.1.1/192.168.50.1/g' package/base-files/files/bin/config_generate && \
+    make -j8 download V=s && \
+    make -j1 V=s

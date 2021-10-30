@@ -1,0 +1,27 @@
+name: Docker Redmi AC2100 OpenWrt
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        image-namespace: [wataly]
+        image-name: [openwrt]
+        image-version: [redmi-ac2100]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: Build Image
+      env:
+        docker_username: ${{ secrets.DOCKER_HUB_ID }}
+        docker_password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      run: |
+        cd docker
+        sudo docker login --username=${docker_username} --password=${docker_password}
+        sudo docker build -f redmi-ac2100-openwrt.yml -t ${{ matrix.image-namespace }}/${{ matrix.image-name }}:${{ matrix.image-version }} .
+        sudo docker push ${{ matrix.image-namespace }}/${{ matrix.image-name }}:${{ matrix.image-version }}
