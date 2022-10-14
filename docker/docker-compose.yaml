@@ -1,9 +1,9 @@
 version: '3'
 services:
   php-fpm:
+    image: wataly/actions:php-fpm
     build:
       context: ./php-fpm
-      image: wataly/actions:php-fpm
       args:
         - CHANGE_SOURCE=${CHANGE_SOURCE}
         - BASE_IMAGE_TAG_PREFIX=${PHP_FPM_BASE_IMAGE_TAG_PREFIX}
