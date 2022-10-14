@@ -24,5 +24,5 @@ jobs:
       run: |
         cd docker
         sudo docker login --username=${docker_username} --password=${docker_password}
-        sudo docker build -f php-fpm/Dockerfile -t wataly/actions:php-fpm .
+        sudo docker-compose build php-fpm
         sudo docker push wataly/actions:php-fpm
