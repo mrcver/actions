@@ -24,5 +24,9 @@ jobs:
       run: |
         cd docker
         sudo docker login --username=${docker_username} --password=${docker_password}
-        sudo docker-compose build php-fpm
-        sudo docker push wataly/actions:php-fpm
+        sudo export PHP_VERSION=7.2 && docker-compose build --no-cache php-fpm
+        sudo docker push wataly/php:$PHP_VERSION
+        sudo export PHP_VERSION=7.3 && docker-compose build --no-cache php-fpm
+        sudo docker push wataly/php:$PHP_VERSION
+        sudo export PHP_VERSION=7.4 && docker-compose build --no-cache php-fpm
+        sudo docker push wataly/php:$PHP_VERSION

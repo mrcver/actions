@@ -1,7 +1,7 @@
 version: '3'
 services:
   php-fpm:
-    image: wataly/actions:php-fpm
+    image: wataly/php:${PHP_VERSION}
     build:
       context: ./php-fpm
       args:
