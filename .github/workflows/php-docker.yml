@@ -1,7 +1,10 @@
 name: PHP-FPM Docker Build
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - php
+  # workflow_dispatch:
 
 jobs:
   build:
