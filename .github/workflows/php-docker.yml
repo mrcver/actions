@@ -23,10 +23,10 @@ jobs:
         docker_password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       run: |
         cd docker
-        sudo docker login --username=${docker_username} --password=${docker_password}
-        export PHP_VERSION=7.2 && sudo docker-compose build --no-cache php-fpm
-        sudo docker push wataly/php:$PHP_VERSION
-        export PHP_VERSION=7.3 && sudo docker-compose build --no-cache php-fpm
-        sudo docker push wataly/php:$PHP_VERSION
-        export PHP_VERSION=7.4 && sudo docker-compose build --no-cache php-fpm
-        sudo docker push wataly/php:$PHP_VERSION
+        docker login --username=${docker_username} --password=${docker_password}
+        export PHP_VERSION=7.2 && docker-compose build --no-cache php-fpm
+        docker push wataly/php:$PHP_VERSION
+        export PHP_VERSION=7.3 && docker-compose build --no-cache php-fpm
+        docker push wataly/php:$PHP_VERSION
+        export PHP_VERSION=7.4 && docker-compose build --no-cache php-fpm
+        docker push wataly/php:$PHP_VERSION
