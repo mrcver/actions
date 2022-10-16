@@ -1290,7 +1290,10 @@ USER root
 # Clean up
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    rm /var/log/lastlog /var/log/faillog
+    rm /var/log/lastlog /var/log/faillog && \
+    curl -s http://getcomposer.org/installer | php && \
+    mv composer.phar /usr/local/bin/composer && \
+    composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 
 # Configure non-root user.
 ARG PUID=1000
