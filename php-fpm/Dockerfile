@@ -9,7 +9,7 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 #install exts
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     # php extensions install
-    install-php-extensions pdo_mysql mysqli mbstring gd curl opcache && \
+    install-php-extensions pdo_mysql mysqli mbstring gd curl opcache mcrypt redis uuid bcmath zip intl && \
     # composer
     install-php-extensions @composer
 
@@ -23,4 +23,4 @@ RUN apk --no-cache add tzdata \
 RUN apk --no-cache add shadow && usermod -u 1000 www-data && groupmod -g 1000 www-data
 
 
-WORKDIR /var/html/www
+WORKDIR /var/www/html
